@@ -5,7 +5,7 @@ services:
     hostname: ${NODE_FQDN}
     restart: unless-stopped
     ports:
-      - "8080:3000"
+      - "8081:3000"
     environment:
       # Writes go through HAProxy on the VIP to the current Patroni leader
       DATABASE_URL: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5000/printers
