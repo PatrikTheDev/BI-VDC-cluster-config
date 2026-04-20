@@ -1,0 +1,19 @@
+services:
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.12
+    container_name: etcd
+    network_mode: host
+    restart: unless-stopped
+    command:
+      - etcd
+      - --name=${NODE_NAME}
+      - --data-dir=/etcd-data
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://${NODE_FQDN}:2379
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --initial-advertise-peer-urls=http://${NODE_FQDN}:2380
+      - --initial-cluster=svobopat-01=http://svobopat-01:2380,svobopat-02=http://svobopat-02:2380,krizvoj4-03=http://krizvoj4-03:2380
+      - --initial-cluster-state=new
+      - --initial-cluster-token=etcd-cluster-1
+    volumes:
+      - /var/lib/etcd:/etcd-data

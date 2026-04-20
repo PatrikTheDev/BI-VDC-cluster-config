@@ -1,0 +1,21 @@
+services:
+  patroni:
+    image: ghcr.io/zalando/patroni:latest
+    container_name: patroni
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      PATRONI_NAME: ${NODE_NAME}
+      PATRONI_SCOPE: pg-cluster
+      PATRONI_ETCD3_HOSTS: "'svobopat-01:2379','svobopat-02:2379','krizvoj4-03:2379'"
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      PATRONI_RESTAPI_CONNECT_ADDRESS: ${NODE_FQDN}:8008
+      PATRONI_POSTGRESQL_LISTEN: 0.0.0.0:5432
+      PATRONI_POSTGRESQL_CONNECT_ADDRESS: ${NODE_FQDN}:5432
+      PATRONI_POSTGRESQL_DATA_DIR: /data/postgres
+      PATRONI_SUPERUSER_USERNAME: postgres
+      PATRONI_SUPERUSER_PASSWORD: ${PG_SUPER_PW}
+      PATRONI_REPLICATION_USERNAME: replicator
+      PATRONI_REPLICATION_PASSWORD: ${PG_REPL_PW}
+    volumes:
+      - /var/lib/patroni:/data/postgres
