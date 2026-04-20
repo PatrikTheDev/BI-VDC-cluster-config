@@ -19,4 +19,4 @@ services:
       # Spilo expects these paths:
       PGROOT: /home/postgres/pgroot
     volumes:
-      - /var/lib/patroni:/home/postgres/pgroot
+      - /var/lib/patroni:/home/postgres/pgdata
