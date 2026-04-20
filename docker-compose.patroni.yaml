@@ -12,11 +12,8 @@ services:
       PGPASSWORD_SUPERUSER: ${PG_SUPER_PW}
       PGPASSWORD_REPLICATION: ${PG_REPL_PW}
       PGPASSWORD_ADMIN: ${PG_ADMIN_PW}
-      # Patroni's own vars still work for node-specific bits:
       PATRONI_NAME: ${NODE_NAME}
       PATRONI_RESTAPI_CONNECT_ADDRESS: ${NODE_FQDN}:8008
       PATRONI_POSTGRESQL_CONNECT_ADDRESS: ${NODE_FQDN}:5432
-      # Spilo expects these paths:
-      PGROOT: /home/postgres/pgroot
     volumes:
       - /var/lib/patroni:/home/postgres/pgdata
