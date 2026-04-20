@@ -1,0 +1,19 @@
+services:
+  app:
+    image: ghcr.io/patrikthedev/bi-vdc-semestral:sha-b9be4ca
+    container_name: app
+    hostname: ${NODE_FQDN}
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+    environment:
+      # Writes go through HAProxy on the VIP to the current Patroni leader
+      DATABASE_URL: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5000/printers
+      # Optional: separate URL for read-only queries if the app supports it
+      DATABASE_URL_RO: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5001/printers
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
