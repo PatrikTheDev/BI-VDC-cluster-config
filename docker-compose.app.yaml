@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/patrikthedev/bi-vdc-semestral:sha-ddc1297
+    image: ghcr.io/patrikthedev/bi-vdc-semestral:sha-5874e91
     container_name: app
     hostname: ${NODE_FQDN}
     restart: unless-stopped
