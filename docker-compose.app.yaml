@@ -12,7 +12,8 @@ services:
       # Optional: separate URL for read-only queries if the app supports it
       DATABASE_URL_RO: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5001/printers
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/health || exit 1"]
+      test:
+        ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
       interval: 10s
       timeout: 3s
       retries: 3
