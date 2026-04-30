@@ -11,7 +11,7 @@ services:
       DATABASE_URL: postgres://postgres:supersecret@${VIP_FQDN}:5000/printers?sslmode=require
     healthcheck:
       test:
-        ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
+        ["CMD-SHELL", "node -e \"fetch('http://localhost:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))\""]
       interval: 10s
       timeout: 3s
       retries: 3
