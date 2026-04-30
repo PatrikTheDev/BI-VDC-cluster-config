@@ -8,9 +8,7 @@ services:
       - "8081:3000"
     environment:
       # Writes go through HAProxy on the VIP to the current Patroni leader
-      DATABASE_URL: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5000/printers
-      # Optional: separate URL for read-only queries if the app supports it
-      DATABASE_URL_RO: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5001/printers
+      DATABASE_URL: postgres://app_user:${APP_DB_PW}@${VIP_FQDN}:5000/printers?sslmode=require
     healthcheck:
       test:
         ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
